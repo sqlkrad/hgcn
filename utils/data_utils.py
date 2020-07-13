@@ -80,6 +80,10 @@ def augment(adj, features, normalize_feats=True):
 
 
 def mask_edges(adj, val_prop, test_prop, seed):
+    '''
+    这种切分方法是假定现有的边都是对的，对于没有半监督的链接预测是不行的，有一些缺失的边需要填充，所以应该改变切分方法。
+    另外有些时候边的类型有多种，并不想预测所有的边，只想用某一种边做训练，这种时候也要修改这里。
+    '''
     np.random.seed(seed)  # get tp edges
     x, y = sp.triu(adj).nonzero()
     pos_edges = np.array(list(zip(x, y)))
